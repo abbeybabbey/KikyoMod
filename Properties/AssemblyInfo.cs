@@ -1,7 +1,8 @@
 ﻿using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
+using KikyoMod;
 using MelonLoader;
+using Main = KikyoMod.Main;
 
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
@@ -15,7 +16,7 @@ using MelonLoader;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
-[assembly: MelonInfo(typeof(CVRMods.Main), CVRMods.ModInfo.Name, CVRMods.ModInfo.Version, CVRMods.ModInfo.Author)]
+[assembly: MelonInfo(typeof(Main), ModInfo.Name, ModInfo.Version, ModInfo.Author)]
 [assembly: MelonGame("Alpha Blend Interactive", "ChilloutVR")]
 [assembly: MelonPlatformDomain(MelonPlatformDomainAttribute.CompatibleDomains.MONO)]
 [assembly: MelonProcess("ChilloutVR.exe")]

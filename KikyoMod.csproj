@@ -7,8 +7,8 @@
     <ProjectGuid>{1B8B0C87-1DCE-483C-8811-E23F554C88CE}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CVRMods</RootNamespace>
-    <AssemblyName>CVRMods</AssemblyName>
+    <RootNamespace>KikyoMod</RootNamespace>
+    <AssemblyName>KikyoMod</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -60,6 +60,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FeatureComponent.cs" />
+    <Compile Include="Features\IdentifiersSpoofer.cs" />
+    <Compile Include="Features\InstantiateSanitizer.cs" />
+    <Compile Include="KikyoLogger.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UnityExtensions.cs" />
@@ -67,5 +71,6 @@
   <ItemGroup>
     <Analyzer Include="D:\SteamLibrary\steamapps\common\ChilloutVR\ChilloutVR_Data\Managed\Assembly-CSharp.dll" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
