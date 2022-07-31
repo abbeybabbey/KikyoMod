@@ -32,37 +32,47 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="0Harmony">
-      <HintPath>D:\SteamLibrary\steamapps\common\ChilloutVR\MelonLoader\0Harmony.dll</HintPath>
+    <Reference Include="0Harmony, Version=2.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\0Harmony.dll</HintPath>
     </Reference>
-    <Reference Include="Assembly-CSharp">
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>D:\SteamLibrary\steamapps\common\ChilloutVR\ChilloutVR_Data\Managed\Assembly-CSharp.dll</HintPath>
     </Reference>
-    <Reference Include="DarkRift">
-      <HintPath>D:\SteamLibrary\steamapps\common\ChilloutVR\ChilloutVR_Data\Managed\DarkRift.dll</HintPath>
+    <Reference Include="Assembly-CSharp-firstpass, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\Assembly-CSharp-firstpass.dll</HintPath>
     </Reference>
-    <Reference Include="DissonanceVoip">
-      <HintPath>D:\SteamLibrary\steamapps\common\ChilloutVR\ChilloutVR_Data\Managed\DissonanceVoip.dll</HintPath>
+    <Reference Include="DarkRift, Version=2.4.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\DarkRift.dll</HintPath>
     </Reference>
-    <Reference Include="MelonLoader">
-      <HintPath>D:\SteamLibrary\steamapps\common\ChilloutVR\MelonLoader\MelonLoader.dll</HintPath>
+    <Reference Include="MelonLoader, Version=0.5.4.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\MelonLoader.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="UnityEngine.CoreModule">
-      <HintPath>D:\SteamLibrary\steamapps\common\ChilloutVR\ChilloutVR_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+    <Reference Include="UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\UnityEngine.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Libs\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FeatureComponent.cs" />
     <Compile Include="Features\IdentifiersSpoofer.cs" />
     <Compile Include="Features\InstantiateSanitizer.cs" />
+    <Compile Include="Features\NetworkInformation.cs" />
+    <Compile Include="Features\NoRichPresence.cs" />
+    <Compile Include="Features\QmFreeze.cs" />
     <Compile Include="KikyoLogger.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

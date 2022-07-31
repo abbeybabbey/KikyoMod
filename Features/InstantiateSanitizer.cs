@@ -1,4 +1,6 @@
 ﻿using System;
+using ABI_RC.Core.Player;
+using ABI_RC.Core.Savior;
 using ABI_RC.Core.Util;
 using DarkRift;
 using UnityEngine;
@@ -59,6 +61,16 @@ internal class InstantiateSanitizer : FeatureComponent
     {
         using var reader = message.GetReader();
         var portalOwner = reader.ReadString();
-        KikyoLogger.Msg($"Received a spawn portal network request, PortalOwner: {portalOwner}");
+        var getInstanceId = reader.ReadString();
+        if (portalOwner == MetaPort.Instance.ownerId)
+        {
+            KikyoLogger.Msg($"Received a spawn portal network request from {MetaPort.Instance.username} to an instance: {getInstanceId}");
+        }
+        else
+        {
+            var cvrPlayerManager = Object.FindObjectOfType<CVRPlayerManager>();
+            var username = cvrPlayerManager.TryGetPlayerName(portalOwner);
+            KikyoLogger.Msg($"Received a spawn portal network request from {username} to an instance: {getInstanceId}");
+        }
     }
 }

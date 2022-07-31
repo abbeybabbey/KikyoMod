@@ -13,7 +13,7 @@ internal static class ModInfo
 {
     public const string Name = "KikyoMod";
     public const string Author = "abbey";
-    public const string Version = "1.0.0.3";
+    public const string Version = "1.0.0.4";
 }
 
 public class Main : MelonMod
