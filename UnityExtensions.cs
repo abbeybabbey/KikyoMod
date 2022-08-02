@@ -2,14 +2,15 @@
 
 namespace KikyoMod;
 
+/*
+ * original source code: https://github.com/RequiDev/ReMod.Core/blob/master/Unity/UnityExtensions.cs
+ */
+
 internal static class UnityExtensions
 {
     private const float MaxAllowedValueTop = 3.402823E+7f;
 
     private const float MaxAllowedValueBottom = -3.402823E+7f;
-    /*
-     * original source code: https://github.com/RequiDev/ReMod.Core/blob/master/Unity/UnityExtensions.cs
-     */
 
     public static string GetPath(this Transform current)
     {

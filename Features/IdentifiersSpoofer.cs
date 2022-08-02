@@ -50,39 +50,28 @@ internal class IdentifiersSpoofer : FeatureComponent
 
         _newDeviceName = newDeviceName;
 
-        try
-        {
-            Harmony.Patch(
-                typeof(SystemInfo).GetProperty(nameof(SystemInfo.deviceUniqueIdentifier))?.GetMethod,
-                postfix: GetLocalPatch(nameof(HWIDPatch)));
+        Harmony.Patch(
+            typeof(SystemInfo).GetProperty(nameof(SystemInfo.deviceUniqueIdentifier))?.GetMethod,
+            postfix: GetLocalPatch(nameof(HWIDPatch)));
 
-            if (SystemInfo.deviceUniqueIdentifier == newId) KikyoLogger.Msg($"Patched HWID: {newId}");
-            else KikyoLogger.Error($"{SystemInfo.deviceUniqueIdentifier} and {newId} don't match, patching failed");
-        }
-        catch (Exception e)
-        {
-            KikyoLogger.Error("An exception occurred while trying to patch a deviceUniqueIdentifier:\n", e);
-        }
+        if (SystemInfo.deviceUniqueIdentifier == newId) KikyoLogger.Msg($"Patched HWID: {newId}");
+        else KikyoLogger.Error($"{SystemInfo.deviceUniqueIdentifier} and {newId} don't match, patching failed");
 
-        try
-        {
-            Harmony.Patch(
-                typeof(SystemInfo).GetProperty(nameof(SystemInfo.deviceName))?.GetMethod,
-                postfix: GetLocalPatch(nameof(DeviceNamePatch)));
+        Harmony.Patch(
+            typeof(SystemInfo).GetProperty(nameof(SystemInfo.deviceName))?.GetMethod,
+            postfix: GetLocalPatch(nameof(DeviceNamePatch)));
 
-            if (SystemInfo.deviceName == newDeviceName) KikyoLogger.Msg($"Patched DeviceName: {newDeviceName}");
-            else KikyoLogger.Error($"{SystemInfo.deviceName} and {newDeviceName} don't match, patching failed");
-        }
-        catch (Exception e)
-        {
-            KikyoLogger.Error("An exception occurred while trying to patch a deviceName:\n", e);
-        }
+        if (SystemInfo.deviceName == newDeviceName) KikyoLogger.Msg($"Patched DeviceName: {newDeviceName}");
+        else KikyoLogger.Error($"{SystemInfo.deviceName} and {newDeviceName} don't match, patching failed");
     }
 
     public override string FeatureName => GetType().Name;
     public override string OriginalAuthor => "knah";
 
-
+    /*
+     * If you wish to alter the __result, you need to define it by reference like ref string name
+     * https://harmony.pardeike.net/articles/patching-injections.html#__result
+     */
     private static void DeviceNamePatch(ref string __result)
     {
         __result = _newDeviceName;

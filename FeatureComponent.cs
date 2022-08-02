@@ -17,8 +17,8 @@ internal class FeatureComponent
 
     public virtual string OriginalAuthor => "OriginalAuthor";
 
-    protected HarmonyMethod GetLocalPatch(string name)
+    protected HarmonyMethod GetLocalPatch(string method)
     {
-        return GetType().GetMethod(name, BindingFlags.NonPublic | BindingFlags.Static).ToNewHarmonyMethod();
+        return GetType().GetMethod(method, BindingFlags.NonPublic | BindingFlags.Static).ToNewHarmonyMethod();
     }
 }

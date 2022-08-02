@@ -3,16 +3,16 @@ using ABI_RC.Systems.MovementSystem;
 
 namespace KikyoMod.Features;
 
-internal class QmFreeze : FeatureComponent
-{
-    /*
-     * original project source: https://github.com/xKiraiChan/CVRPlugins/blob/master/MenuFreeze/Plugin.cs
-     */
+/*
+ * original project source: https://github.com/xKiraiChan/CVRPlugins/blob/master/MenuFreeze/Plugin.cs
+ */
 
+internal class MenuFreeze : FeatureComponent
+{
     public override string FeatureName => GetType().Name;
     public override string OriginalAuthor => "xKiraiChan";
 
-    public QmFreeze()
+    public MenuFreeze()
     {
         var types = new[] { typeof(bool) };
 

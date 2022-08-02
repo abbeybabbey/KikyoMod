@@ -1,9 +1,4 @@
-﻿using System;
-using ABI_RC.Core.Player;
-using ABI_RC.Core.Savior;
-using ABI_RC.Core.Util;
-using DarkRift;
-using UnityEngine;
+﻿using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace KikyoMod.Features;
@@ -12,27 +7,10 @@ internal class InstantiateSanitizer : FeatureComponent
 {
     public InstantiateSanitizer()
     {
-        try
-        {
-            Harmony.Patch(
-                typeof(Object).GetMethod(nameof(Object.Instantiate),
-                    new[] { typeof(Object), typeof(Vector3), typeof(Quaternion) }),
-                GetLocalPatch(nameof(InstantiatePatch)));
-        }
-        catch (Exception e)
-        {
-            KikyoLogger.Error("An exception occurred while trying to patch a Instantiate:\n", e);
-        }
-
-        try
-        {
-            Harmony.Patch(typeof(CVRSyncHelper).GetMethod(nameof(CVRSyncHelper.SpawnPortalFromNetwork)),
-                GetLocalPatch(nameof(SpawnPortalFromNetworkPatch)));
-        }
-        catch (Exception e)
-        {
-            KikyoLogger.Error("An exception occurred while trying to patch a SpawnPortalFromNetwork:\n", e);
-        }
+        Harmony.Patch(
+            typeof(Object).GetMethod(nameof(Object.Instantiate),
+                new[] { typeof(Object), typeof(Vector3), typeof(Quaternion) }),
+            GetLocalPatch(nameof(InstantiatePatch)));
     }
 
     public override string FeatureName => GetType().Name;
@@ -55,22 +33,5 @@ internal class InstantiateSanitizer : FeatureComponent
         }
 
         return true;
-    }
-
-    private static void SpawnPortalFromNetworkPatch(Message message)
-    {
-        using var reader = message.GetReader();
-        var portalOwner = reader.ReadString();
-        var getInstanceId = reader.ReadString();
-        if (portalOwner == MetaPort.Instance.ownerId)
-        {
-            KikyoLogger.Msg($"Received a spawn portal network request from {MetaPort.Instance.username} to an instance: {getInstanceId}");
-        }
-        else
-        {
-            var cvrPlayerManager = Object.FindObjectOfType<CVRPlayerManager>();
-            var username = cvrPlayerManager.TryGetPlayerName(portalOwner);
-            KikyoLogger.Msg($"Received a spawn portal network request from {username} to an instance: {getInstanceId}");
-        }
     }
 }
