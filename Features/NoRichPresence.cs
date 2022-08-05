@@ -13,7 +13,7 @@ internal class NoRichPresence : FeatureComponent
         Harmony.Patch(typeof(SteamFriends).GetMethod(nameof(SteamFriends.SetRichPresence)),
             GetLocalPatch(nameof(SetRichPresencePatch)));
 
-        Harmony.Patch(typeof(PresenceManager).GetMethod(nameof(PresenceManager.UpdatePresence)),
+        Harmony.Patch(typeof(DiscordRpc).GetMethod(nameof(DiscordRpc.UpdatePresence)),
             GetLocalPatch(nameof(SetRichPresencePatch)));
     }
 

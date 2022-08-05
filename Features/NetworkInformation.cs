@@ -1,5 +1,9 @@
 ﻿using System;
 using ABI.CCK.Components;
+using ABI_RC.Core.EventSystem;
+using ABI_RC.Core.IO;
+using ABI_RC.Core.Networking.IO.Instancing;
+using ABI_RC.Core.Networking.IO.Social;
 using ABI_RC.Core.Player;
 using ABI_RC.Core.Savior;
 using ABI_RC.Core.Util;
@@ -21,37 +25,31 @@ internal class NetworkInformation : FeatureComponent
         Harmony.Patch(typeof(CVRPlayerManager).GetMethod(nameof(CVRPlayerManager.TryCreatePlayer)),
             postfix: GetLocalPatch(nameof(TryCreatePlayerPatch)));
 
-        Harmony.Patch(typeof(CVRPlayerManager).GetMethod(nameof(CVRPlayerManager.TryDeletePlayer)), 
+        Harmony.Patch(typeof(CVRPlayerManager).GetMethod(nameof(CVRPlayerManager.TryDeletePlayer)),
             GetLocalPatch(nameof(TryDeletePlayerPatch)));
 
         Harmony.Patch(typeof(CVRSyncHelper).GetMethod(nameof(CVRSyncHelper.SpawnPortalFromNetwork)),
             postfix: GetLocalPatch(nameof(SpawnPortalFromNetworkPatch)));
 
-        Harmony.Patch(typeof(PuppetMaster).GetMethod(nameof(PuppetMaster.AvatarInstantiated)), 
-            postfix: GetLocalPatch(nameof(AvatarInstantiatedPatch)));
+        Harmony.Patch(typeof(Instances).GetMethod(nameof(Instances.SetJoinTarget)),
+            postfix: GetLocalPatch(nameof(SetJoinTargetPatch)));
 
-        Harmony.Patch(AccessTools.Method(typeof(CVRWorld), "Start"), postfix: GetLocalPatch(nameof(WorldStartPatch)));
+        Harmony.Patch(typeof(CVRObjectLoader).GetMethod(nameof(CVRObjectLoader.InstantiateAvatar)),
+            postfix: GetLocalPatch(nameof(InstantiateAvatarA)));
     }
 
-    private static void WorldStartPatch(CVRWorld __instance)
+    private static void SetJoinTargetPatch(string instanceId, string worldId)
     {
-       KikyoLogger.Msg($"World Started: {__instance.gameObject.GetComponent<CVRAssetInfo>().guid}");
+        KikyoLogger.Msg($"SetJoinTarget: {instanceId}, worldId: {worldId}");
     }
 
-    //https://github.com/ljoonal/CVR-Plugins/blob/main/HopLib/Api/Avatar.cs
-    private static void AvatarInstantiatedPatch(PuppetMaster __instance)
+    // way better than the previous method, truly gets everyone's avatar instantiate event from my testing
+    private static void InstantiateAvatarA(DownloadJob.ObjectType t, AssetManagement.AvatarTags tags, string objectId,
+        string instTarget = null, byte[] b = null)
     {
-        var avatarGuid = __instance.avatarObject.GetComponent<CVRAssetInfo>().guid;
-        if (string.IsNullOrEmpty(avatarGuid)) return;
-        /*
-         * HarmonyLib traverse is being used to access a private element in a class, https://harmony.pardeike.net/articles/utilities.html#traverse
-         * Although most fields, properties and methods in that class hierarchy are private, Traverse can easily access anything.
-         * It has build-in null protection and propagates null as a result if any of the intermediates would encounter null. 
-         */
-        var playerDescriptor = Traverse.Create(__instance)
-            .Field("_playerDescriptor")
-            .GetValue<PlayerDescriptor>();
-        KikyoLogger.Msg(ConsoleColor.Cyan, $"AvatarInstantiated by {playerDescriptor.userName} with an avatar {__instance.avatarObject.GetComponent<CVRAssetInfo>().guid}");
+        if (instTarget == "_PLAYERLOCAL") return;
+        var player = CVRPlayerManager.Instance.TryGetPlayerName(instTarget);
+        KikyoLogger.Msg(ConsoleColor.Cyan, $"InstantiateAvatar by {player} with an avatar {objectId}");
     }
 
     private static void SpawnPortalFromNetworkPatch(Message message)

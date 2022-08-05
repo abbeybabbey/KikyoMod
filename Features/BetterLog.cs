@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace KikyoMod.Features;
 
@@ -9,14 +10,11 @@ internal class BetterLog : FeatureComponent
 
     public BetterLog()
     {
-        Application.logMessageReceived += LogMessageReceivedAction;
+        // Application.logMessageReceived += LogMessageReceivedAction;
     }
 
     private static void LogMessageReceivedAction(string condition, string stackTrace, LogType type)
     {
-        if (type is LogType.Error)
-        {
-            KikyoLogger.Error($"Unity Log: {condition}");
-        }
+        KikyoLogger.Msg(ConsoleColor.Green, $"Unity Log: {condition}");
     }
 }

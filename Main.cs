@@ -27,12 +27,6 @@ public class Main : MelonMod
         InitializeFeatures();
     }
 
-    public override void OnSceneWasLoaded(int buildIndex, string sceneName)
-    {
-        if (buildIndex != -1) return;
-        KikyoLogger.Msg(ConsoleColor.Cyan,$"OnSceneWasLoaded: {sceneName} with index: {buildIndex}");
-    }
-
     //https://github.com/RequiDev/ReModCE/blob/85c7eacbad74e2fbdfac2b2a8d8d266c86a08fea/ReModCE/ReModCE.cs#L327
     private static void InitializeFeatures()
     {
